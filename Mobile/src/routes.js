@@ -2,11 +2,12 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import Progress from './pages/Progress';
 
 const TabBar = createBottomTabNavigator();
 
@@ -14,6 +15,10 @@ const icons = {
     Home: {
         lib: AntDesign,
         name: 'home',
+    },
+    Search: {
+        lib: Feather,
+        name: 'search',
     },
     Settings: {
         lib: AntDesign,
@@ -28,7 +33,7 @@ const icons = {
 export default function Routes() {
     return (
         <>
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+            <StatusBar barStyle="light-content" backgroundColor="#000000" />
 
             <NavigationContainer>
                 <TabBar.Navigator
@@ -50,7 +55,8 @@ export default function Routes() {
                     }}
                 >
                     <TabBar.Screen name="Home" component={Dashboard} />
-                    <TabBar.Screen name="Settings" component={Dashboard} />
+                    <TabBar.Screen name="Search" component={Dashboard} />
+                    <TabBar.Screen name="Settings" component={Progress} />
                     <TabBar.Screen name="Profile" component={Dashboard} />
                 </TabBar.Navigator>
             </NavigationContainer>

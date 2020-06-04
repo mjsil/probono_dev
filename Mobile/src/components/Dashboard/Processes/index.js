@@ -69,7 +69,11 @@ export default function Processes() {
                                     </ProcessNumber>
                                 </InfoProcess>
                             </Process>
-                            <AntDesign name="right" size={24} color="#000000" />
+                            <AntDesign
+                                name="rightcircleo"
+                                size={24}
+                                color="#000000"
+                            />
                         </ProcessContainer>
                     )}
                 />
