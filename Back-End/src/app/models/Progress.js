@@ -15,7 +15,8 @@ class Progress extends Model {
 
     static associate(models) {
         this.belongsTo(models.Process, {
-            foreignKey: 'process',
+            foreignKey: 'id_process',
+            as: 'process',
         });
     }
 }

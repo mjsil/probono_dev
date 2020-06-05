@@ -14,7 +14,7 @@ class ProcessController {
 
         if (!isLawyer) {
             return res.status(401).json({
-                error: 'You can only create process with lawyer',
+                error: 'You can only create processes as lawyer',
             });
         }
 

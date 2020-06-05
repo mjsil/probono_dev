@@ -2,7 +2,6 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 import User from '../app/models/User';
 import Process from '../app/models/Process';
-import Progress from '../app/models/Progress';
 
 const models = [User, Process];
 
