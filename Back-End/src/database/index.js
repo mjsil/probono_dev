@@ -3,8 +3,9 @@ import databaseConfig from '../config/database';
 import User from '../app/models/User';
 import Process from '../app/models/Process';
 import Progress from '../app/models/Progress';
+import Rule from '../app/models/Rule';
 
-const models = [User, Process, Progress];
+const models = [User, Process, Progress, Rule];
 
 class Database {
     constructor() {
