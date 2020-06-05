@@ -14,5 +14,6 @@ routes.post('/session', SessionController.store);
 routes.use(authMiddleware);
 
 routes.post('/create/process', ProcessController.store);
+routes.get('/my/processes', ProcessController.index);
 
 export default routes;
