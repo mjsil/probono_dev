@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Progress from './pages/Progress';
+import Search from './pages/Search';
 
 const TabBar = createBottomTabNavigator();
 
@@ -47,6 +48,7 @@ export default function Routes() {
                         },
                     })}
                     tabBarOptions={{
+                        showLabel: false,
                         activeTintColor: '#fff',
                         inactiveTintColor: '#808080',
                         style: {
@@ -55,7 +57,7 @@ export default function Routes() {
                     }}
                 >
                     <TabBar.Screen name="Home" component={Dashboard} />
-                    <TabBar.Screen name="Search" component={Dashboard} />
+                    <TabBar.Screen name="Search" component={Search} />
                     <TabBar.Screen name="Settings" component={Progress} />
                     <TabBar.Screen name="Profile" component={Dashboard} />
                 </TabBar.Navigator>

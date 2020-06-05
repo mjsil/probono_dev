@@ -48,10 +48,10 @@ const processes = [
     },
 ];
 
-export default function Processes() {
+export default function Processes({ title }) {
     return (
         <>
-            <Title>Processos</Title>
+            <Title>{title}</Title>
             <Container>
                 <ListProcesses
                     data={processes}

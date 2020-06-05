@@ -11,7 +11,7 @@ export const Icon = styled.TouchableOpacity`
     flex: 1;
 `;
 
-export const Process = styled.Text`
+export const Title = styled.Text`
     height: 100%;
     font-size: 20px;
     font-weight: 700;

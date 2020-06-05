@@ -9,7 +9,7 @@ export default function Dashboard() {
     return (
         <Container>
             <Banner />
-            <Processes />
+            <Processes title={'Processos'} />
         </Container>
     );
 }
