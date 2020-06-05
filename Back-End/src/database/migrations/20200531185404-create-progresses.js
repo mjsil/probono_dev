@@ -7,20 +7,24 @@ module.exports = {
                 autoIncrement: true,
                 allowNull: false,
             },
-            process: {
+            id_process: {
                 type: Sequelize.INTEGER,
                 references: { model: 'processes', key: 'id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',
                 allowNull: false,
             },
-            description: {
+            generic_title: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
             date: {
                 type: Sequelize.DATE,
-                allowNull: false,
+                allowNull: true,
+            },
+            hours: {
+                type: Sequelize.STRING,
+                allowNull: true,
             },
             created_at: {
                 type: Sequelize.DATE,

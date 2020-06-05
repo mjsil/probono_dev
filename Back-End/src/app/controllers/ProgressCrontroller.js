@@ -1,7 +1,7 @@
 import User from '../models/User';
 import Process from '../models/Process';
 import Progress from '../models/Progress';
-import { startOfHour, parseISO } from 'date-fns';
+import Rule from '../models/Rule';
 
 class ProgressController {
     async store(req, res) {
@@ -36,21 +36,23 @@ class ProgressController {
             });
         }
 
-        const formattedDate = startOfHour(parseISO(req.body.date));
-
-        // FAZER A BUSCA PARA SUBSTITUIÇÃO DA DESCRIÇÃO DO CASO
-
-        // const progress = await Progress.create({
-        //     id_process,
-        //     description: req.body.description,
-        //     date: formattedDate,
-        // });
-
-        return res.json({
-            id_process,
-            description: req.body.description,
-            date: formattedDate,
+        /**
+         * Check if the rule exists
+         */
+        const rule = await Rule.findOne({
+            where: {
+                rule: req.body.generic_title,
+            },
         });
+
+        const progress = await Progress.create({
+            id_process,
+            generic_title: rule ? rule.translation : req.body.generic_title,
+            date: req.body.date,
+            hours: req.body.hours,
+        });
+
+        return res.json(progress);
     }
 }
 
