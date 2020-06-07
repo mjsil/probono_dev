@@ -5,6 +5,7 @@ class Progress extends Model {
         super.init(
             {
                 generic_title: Sequelize.STRING,
+                details: Sequelize.STRING,
                 date: Sequelize.DATE,
                 hours: Sequelize.STRING,
             },

@@ -12,6 +12,13 @@ class Rule extends Model {
             }
         );
     }
+
+    static associate(models) {
+        this.belongsTo(models.User, {
+            foreignKey: 'id_lawyer',
+            as: 'lawyer',
+        });
+    }
 }
 
 export default Rule;

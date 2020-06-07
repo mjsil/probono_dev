@@ -2,8 +2,44 @@ import User from '../models/User';
 import Rule from '../models/Rule';
 
 class RuleController {
+    async show(req, res) {
+        const { gereric_title } = req.params;
+
+        // gereric_title = gereric_title
+        // .normalize('NFD')
+        // .replace(/[\u0300-\u036f]/g, '');
+
+        gereric_title = gereric_title.toLowerCase();
+
+        // const data = await Rule.findOne({
+        //     where: {
+        //         rule: gereric_title,
+        //     },
+        // });
+
+        // if (!data) {
+        //     return res.status(401).json({
+        //         error: 'Rule not found',
+        //     });
+        // }
+
+        return res.json(gereric_title);
+    }
+
     async index(req, res) {
-        return;
+        const rules = await Rule.findAll({
+            where: {
+                id_lawyer: req.userId,
+            },
+        });
+
+        if (!rules) {
+            return res.status(401).json({
+                error: 'Rules not found',
+            });
+        }
+
+        return res.json(rules);
     }
 
     async store(req, res) {
@@ -22,6 +58,7 @@ class RuleController {
 
         const ruleExists = await Rule.findOne({
             where: {
+                id_lawyer: req.userId,
                 rule: req.body.rule,
             },
         });
@@ -32,13 +69,13 @@ class RuleController {
             });
         }
 
-        const { id, rule, translation } = await Rule.create(req.body);
-
-        return res.json({
-            id,
-            rule,
-            translation,
+        const rule = await Rule.create({
+            id_lawyer: req.userId,
+            rule: req.body.rule,
+            translation: req.body.translation,
         });
+
+        return res.json(rule);
     }
 }
 

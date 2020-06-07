@@ -1,9 +1,18 @@
 import User from '../models/User';
 import Process from '../models/Process';
 import Progress from '../models/Progress';
-import Rule from '../models/Rule';
 
 class ProgressController {
+    async index(req, res) {
+        const progresses = await Progress.findAll({
+            where: {
+                id_process: req.params.id,
+            },
+        });
+
+        return res.json(progresses);
+    }
+
     async store(req, res) {
         const isLawyer = await User.findOne({
             where: {
@@ -18,14 +27,12 @@ class ProgressController {
             });
         }
 
-        const { id_process } = req.body;
-
         /**
          * Check if process belongs to lawyer and exists
          */
         const belongs = await Process.findOne({
             where: {
-                id: id_process,
+                id: req.body.id_process,
                 id_lawyer: req.userId,
             },
         });
@@ -36,21 +43,7 @@ class ProgressController {
             });
         }
 
-        /**
-         * Check if the rule exists
-         */
-        const rule = await Rule.findOne({
-            where: {
-                rule: req.body.generic_title,
-            },
-        });
-
-        const progress = await Progress.create({
-            id_process,
-            generic_title: rule ? rule.translation : req.body.generic_title,
-            date: req.body.date,
-            hours: req.body.hours,
-        });
+        const progress = await Progress.create(req.body);
 
         return res.json(progress);
     }

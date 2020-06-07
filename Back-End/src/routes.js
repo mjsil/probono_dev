@@ -19,7 +19,11 @@ routes.post('/create/process', ProcessController.store);
 routes.get('/my/processes', ProcessController.index);
 
 routes.post('/create/progress', ProgressController.store);
+routes.get('/create/progress/:id', ProgressController.index);
 
 routes.post('/create/rules', RuleController.store);
+routes.get('/list/rules', RuleController.index);
+
+routes.get('/show/rule/:gereric_title', RuleController.show);
 
 export default routes;
