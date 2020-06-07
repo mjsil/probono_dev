@@ -5,14 +5,14 @@ class RuleController {
     async show(req, res) {
         const { generic_title } = req.params;
 
-        const titleValidation = generic_title
-            .normalize('NFD')
-            .replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
-            .toLowerCase();
+        // const titleValidation = generic_title
+        //     .normalize('NFD')
+        //     .replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+        //     .toLowerCase();
 
         const rule = await Rule.findOne({
             where: {
-                validation: titleValidation,
+                validation: generic_title,
             },
         });
 
