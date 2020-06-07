@@ -6,6 +6,9 @@ class Rule extends Model {
             {
                 rule: Sequelize.STRING,
                 translation: Sequelize.STRING,
+                validation: Sequelize.STRING,
+                date: Sequelize.DATE,
+                hours: Sequelize.STRING,
             },
             {
                 sequelize,

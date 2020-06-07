@@ -24,6 +24,6 @@ routes.get('/create/progress/:id', ProgressController.index);
 routes.post('/create/rules', RuleController.store);
 routes.get('/list/rules', RuleController.index);
 
-routes.get('/show/rule/:gereric_title', RuleController.show);
+routes.get('/show/rule/:generic_title', RuleController.show);
 
 export default routes;

@@ -3,27 +3,20 @@ import Rule from '../models/Rule';
 
 class RuleController {
     async show(req, res) {
-        const { gereric_title } = req.params;
+        const { generic_title } = req.params;
 
-        // gereric_title = gereric_title
-        // .normalize('NFD')
-        // .replace(/[\u0300-\u036f]/g, '');
+        const titleValidation = generic_title
+            .normalize('NFD')
+            .replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+            .toLowerCase();
 
-        gereric_title = gereric_title.toLowerCase();
+        const rule = await Rule.findOne({
+            where: {
+                validation: titleValidation,
+            },
+        });
 
-        // const data = await Rule.findOne({
-        //     where: {
-        //         rule: gereric_title,
-        //     },
-        // });
-
-        // if (!data) {
-        //     return res.status(401).json({
-        //         error: 'Rule not found',
-        //     });
-        // }
-
-        return res.json(gereric_title);
+        return res.json(rule);
     }
 
     async index(req, res) {
@@ -43,6 +36,8 @@ class RuleController {
     }
 
     async store(req, res) {
+        const { rule, translation, date, hours } = req.body;
+
         const isLawyer = await User.findOne({
             where: {
                 id: req.userId,
@@ -56,10 +51,15 @@ class RuleController {
             });
         }
 
+        const ruleValidation = rule
+            .normalize('NFD')
+            .replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+            .toLowerCase();
+
         const ruleExists = await Rule.findOne({
             where: {
                 id_lawyer: req.userId,
-                rule: req.body.rule,
+                validation: ruleValidation,
             },
         });
 
@@ -69,13 +69,16 @@ class RuleController {
             });
         }
 
-        const rule = await Rule.create({
+        const newRule = await Rule.create({
             id_lawyer: req.userId,
-            rule: req.body.rule,
-            translation: req.body.translation,
+            rule,
+            translation,
+            validation: ruleValidation,
+            date,
+            hours,
         });
 
-        return res.json(rule);
+        return res.json(newRule);
     }
 }
 
