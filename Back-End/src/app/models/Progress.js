@@ -4,8 +4,8 @@ class Progress extends Model {
     static init(sequelize) {
         super.init(
             {
-                description: Sequelize.STRING,
-                date: Sequelize.DATE,
+                generic_title: Sequelize.STRING,
+                details: Sequelize.STRING,
             },
             {
                 sequelize,
@@ -15,7 +15,8 @@ class Progress extends Model {
 
     static associate(models) {
         this.belongsTo(models.Process, {
-            foreignKey: 'process',
+            foreignKey: 'id_process',
+            as: 'process',
         });
     }
 }

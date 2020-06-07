@@ -2,6 +2,32 @@ import User from '../models/User';
 import Process from '../models/Process';
 
 class ProcessController {
+    async index(req, res) {
+        const user = await User.findOne({
+            where: {
+                id: req.userId,
+            },
+        });
+
+        if (user.provider === true) {
+            const listProcesses = await Process.findAll({
+                where: {
+                    id_lawyer: req.userId,
+                },
+            });
+
+            return res.json(listProcesses);
+        }
+
+        const listProcesses = await Process.findAll({
+            where: {
+                id_client: req.userId,
+            },
+        });
+
+        return res.json(listProcesses);
+    }
+
     async store(req, res) {
         const { number, id_client } = req.body;
 
@@ -14,7 +40,7 @@ class ProcessController {
 
         if (!isLawyer) {
             return res.status(401).json({
-                error: 'You can only create process with lawyer',
+                error: 'You can only create processes as lawyer',
             });
         }
 

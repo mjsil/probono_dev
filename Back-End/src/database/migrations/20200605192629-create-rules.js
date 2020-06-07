@@ -1,34 +1,19 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('progresses', {
+        return queryInterface.createTable('rules', {
             id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false,
             },
-            id_process: {
-                type: Sequelize.INTEGER,
-                references: { model: 'processes', key: 'id' },
-                onUpdate: 'CASCADE',
-                onDelete: 'SET NULL',
-                allowNull: false,
-            },
-            generic_title: {
+            rule: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            details: {
+            translation: {
                 type: Sequelize.STRING,
-                allowNull: true,
-            },
-            date: {
-                type: Sequelize.DATE,
-                allowNull: true,
-            },
-            hours: {
-                type: Sequelize.STRING,
-                allowNull: true,
+                allowNull: false,
             },
             created_at: {
                 type: Sequelize.DATE,
@@ -42,6 +27,6 @@ module.exports = {
     },
 
     down: (queryInterface) => {
-        return queryInterface.dropTable('progresses');
+        return queryInterface.dropTable('rules');
     },
 };
