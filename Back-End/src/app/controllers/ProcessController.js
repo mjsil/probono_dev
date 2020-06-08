@@ -2,6 +2,25 @@ import User from '../models/User';
 import Process from '../models/Process';
 
 class ProcessController {
+    async show(req, res) {
+        const { number } = req.params;
+
+        const processExists = await Process.findOne({
+            where: {
+                id_lawyer: req.userId,
+                number,
+            },
+        });
+
+        if (!processExists) {
+            return res.status(401).json({
+                error: 'Process not found',
+            });
+        }
+
+        return res.json(processExists.id);
+    }
+
     async index(req, res) {
         const user = await User.findOne({
             where: {
@@ -14,6 +33,13 @@ class ProcessController {
                 where: {
                     id_lawyer: req.userId,
                 },
+                include: [
+                    {
+                        model: User,
+                        as: 'client',
+                        attributes: ['id', 'name'],
+                    },
+                ],
             });
 
             return res.json(listProcesses);
@@ -23,6 +49,13 @@ class ProcessController {
             where: {
                 id_client: req.userId,
             },
+            include: [
+                {
+                    model: User,
+                    as: 'client',
+                    attributes: ['id', 'name'],
+                },
+            ],
         });
 
         return res.json(listProcesses);
