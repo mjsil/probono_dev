@@ -1,17 +1,15 @@
 import styled, { keyframes, css } from 'styled-components';
 
-export const Header = styled.header`
+export const Title = styled.p`
     display: flex;
     flex: 1;
     justify-content: center;
-`;
-
-export const Image = styled.img`
-    max-height: 50px;
+    font-family: 'Roboto Slab', serif;
+    font-size: 25px;
+    font-weight: 700;
 `;
 
 export const Form = styled.form`
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
 `;
@@ -50,7 +48,7 @@ export const SubmitButton = styled.button.attrs((props) => ({
     color: #fff;
     font-family: 'Roboto Slab', serif;
     font-size: 14px;
-    font-size: 400;
+    font-weight: 400;
     margin-top: 15px;
 
     &[disabled] {
@@ -77,27 +75,10 @@ export const Button = styled.button.attrs(() => ({
     color: #000000;
     font-family: 'Roboto Slab', serif;
     font-size: 14px;
-    font-size: 400;
+    font-weight: 400;
     margin-top: 25px;
 
     strong {
         margin-left: 10px;
-    }
-`;
-
-export const Radio = styled.div`
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-    flex-direction: row;
-    margin-top: 10px;
-
-    input {
-        flex: 0;
-        margin-top: 3px;
-    }
-
-    strong {
-        margin-left: 5px;
     }
 `;
