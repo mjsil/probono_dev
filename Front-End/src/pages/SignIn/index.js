@@ -38,6 +38,7 @@ export default function SignIn() {
             setLoading(false);
             history.push('/dashboard');
         } catch (err) {
+            setLoading(false);
             alert('E-mail ou senha incorretos.');
         }
     }

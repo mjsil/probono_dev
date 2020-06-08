@@ -49,6 +49,7 @@ export default function NewRule() {
             setLoading(false);
             history.push('/dashboard');
         } catch (err) {
+            setLoading(false);
             alert('Algo deu errado tente novamente!');
         }
     }

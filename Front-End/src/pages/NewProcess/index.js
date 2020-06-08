@@ -11,7 +11,9 @@ import Container from '../../components/Container';
 import { Title, SubmitButton, Button } from './styles';
 
 const schema = Yup.object().shape({
-    number: Yup.string().required('O número do processo é obrigatório.'),
+    number: Yup.string()
+        .min(20, 'O processo precisa ter 20 dígitos.')
+        .required('O número do processo é obrigatório.'),
     cpf: Yup.string()
         .min(14, 'Use o formato: 000.000.000-00')
         .required('Informe o CPF do cliente'),
@@ -33,7 +35,11 @@ export default function NewProcess() {
         try {
             setLoading(true);
 
-            const response = await api.get(`/show/user/${cpf}`);
+            const response = await api.get(`/show/user/${cpf}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
             const id_client = response.data;
 
@@ -55,6 +61,7 @@ export default function NewProcess() {
             setLoading(false);
             history.push('/dashboard');
         } catch (err) {
+            setLoading(false);
             alert('Algo deu errado tente novamente!');
         }
     }

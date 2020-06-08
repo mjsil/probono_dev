@@ -45,8 +45,8 @@ export default function SignUp() {
             setLoading(false);
             history.push('/');
         } catch (err) {
+            setLoading(false);
             alert('Verifique os dados ou tente fazer login!');
-            console.log(err);
         }
     }
 

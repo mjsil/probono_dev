@@ -11,11 +11,13 @@ import Container from '../../components/Container';
 import { Title, SubmitButton, Button } from './styles';
 
 const schema = Yup.object().shape({
-    number: Yup.string().required('O número do processo é obrigatório.'),
+    number: Yup.string()
+        .min(20, 'O processo precisa ter 20 dígitos.')
+        .required('O número do processo é obrigatório.'),
     generic_title: Yup.string().required('O título é obrigatório.'),
     details: Yup.string(),
-    date: Yup.string().min(10, 'Use o formato: 2020-09-12'),
-    hours: Yup.string().min(5, 'Use o formato: 12:30'),
+    date: Yup.string(),
+    hours: Yup.string(),
 });
 
 export default function NewProgress() {
@@ -40,12 +42,16 @@ export default function NewProgress() {
         try {
             setLoading(true);
 
-            const response = await api.get(`/show/process/${number}`);
+            const response = await api.get(`/show/process/${number}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
             const id_process = response.data;
 
             await api.post(
-                '/create/process',
+                '/create/progress',
                 {
                     id_process,
                     generic_title,
@@ -65,6 +71,7 @@ export default function NewProgress() {
             setLoading(false);
             history.push('/dashboard');
         } catch (err) {
+            setLoading(false);
             alert('Algo deu errado tente novamente!');
         }
     }
@@ -88,7 +95,7 @@ export default function NewProgress() {
                     type="text"
                     placeholder="Detalhes: HOTEIS E TURISMO LTDA - CNPJ: 0...."
                 />
-                <Input name="date" type="text" placeholder="Data: 2020-07-10" />
+                <Input name="date" type="text" placeholder="Data: 10/07/2020" />
                 <Input name="hours" type="text" placeholder="Horário: 15:30" />
 
                 <SubmitButton loading={loading}>
