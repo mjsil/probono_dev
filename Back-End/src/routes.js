@@ -22,11 +22,13 @@ routes.post('/create/process', ProcessController.store);
 routes.get('/my/processes', ProcessController.index);
 
 routes.post('/create/progress', ProgressController.store);
-routes.get('/create/progress/:id', ProgressController.index);
+routes.get('/list/progress/:id', ProgressController.index);
 
 routes.post('/create/rules', RuleController.store);
 routes.get('/list/rules', RuleController.index);
 
 routes.get('/show/rule/:generic_title', RuleController.show);
+routes.get('/show/user/:cpf', UserController.show);
+routes.get('/show/process/:number', ProcessController.show);
 
 export default routes;

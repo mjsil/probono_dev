@@ -6,6 +6,8 @@ class Progress extends Model {
             {
                 generic_title: Sequelize.STRING,
                 details: Sequelize.STRING,
+                date: Sequelize.DATE,
+                hours: Sequelize.STRING,
             },
             {
                 sequelize,
