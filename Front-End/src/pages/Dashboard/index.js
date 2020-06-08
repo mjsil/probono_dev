@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import api from '../../services/api';
 
 import {
     Container,
@@ -23,7 +25,6 @@ import {
     ProcessClient,
     ProcessButton,
     ContainerLeft,
-    ContentLeft,
     ViewContiner,
     Content,
     Total,
@@ -42,6 +43,18 @@ import avatar from '../../assets/avatar.png';
 import illustration from '../../assets/illustration.svg';
 
 export default function Dashboard() {
+    useEffect(() => {
+        // async function loadProcess() {
+        //     const response = await api.get('my/processes', {
+        //         headers: {
+        //             Authorization:
+        //                 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNTkxNDUwNDE2LCJleHAiOjE1OTE4ODI0MTZ9.g1AFpYE9GzGh6_OxJYV4xhvd-55oCuq8bBXmNakikns',
+        //         },
+        //     });
+        // }
+        // loadProcess();
+    }, []);
+
     return (
         <Container>
             <MenuContainer>
