@@ -43,16 +43,26 @@ import avatar from '../../assets/avatar.png';
 import illustration from '../../assets/illustration.svg';
 
 export default function Dashboard() {
+    const [processes, setProcesses] = useState([]);
+
     useEffect(() => {
-        // async function loadProcess() {
-        //     const response = await api.get('my/processes', {
-        //         headers: {
-        //             Authorization:
-        //                 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNTkxNDUwNDE2LCJleHAiOjE1OTE4ODI0MTZ9.g1AFpYE9GzGh6_OxJYV4xhvd-55oCuq8bBXmNakikns',
-        //         },
-        //     });
-        // }
-        // loadProcess();
+        const getToken = localStorage.getItem('token');
+
+        async function loadProcess() {
+            try {
+                const response = await api.get('/my/processes', {
+                    headers: {
+                        Authorization: 'Bearer ' + JSON.parse(getToken),
+                    },
+                });
+
+                setProcesses(response.data);
+            } catch (err) {
+                console.log('Token invalid');
+            }
+        }
+
+        loadProcess();
     }, []);
 
     return (

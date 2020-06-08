@@ -4,6 +4,7 @@ import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
 import api from '../../services/api';
+import history from '../../services/history';
 
 import Container from '../../components/Container';
 import Header from '../../components/Header';
@@ -26,10 +27,14 @@ export default function SignIn() {
             password,
         });
 
-        const { token, user } = response.data;
+        const { user, token } = response.data;
 
-        console.log(user);
-        console.log(token);
+        api.defaults.headers.common['Authorization'] = token;
+
+        await localStorage.setItem('user', JSON.stringify(user));
+        await localStorage.setItem('token', JSON.stringify(token));
+
+        history.push('/dashboard');
     }
 
     return (
