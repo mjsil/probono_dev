@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import { FaPlus } from 'react-icons/fa';
 
 import api from '../../services/api';
+import history from '../../services/history';
 
 import {
     Container,
@@ -34,6 +38,9 @@ import {
     ProgressClient,
     ProgressDescription,
     ProgressDate,
+    MoreInfo,
+    Options,
+    NameOptions,
 } from './styles';
 
 import home from '../../assets/home.svg';
@@ -44,9 +51,32 @@ import illustration from '../../assets/illustration.svg';
 
 export default function Dashboard() {
     const [processes, setProcesses] = useState([]);
+    const [progresses, setProgresses] = useState([]);
+    const [numberProcess, setNumberProcess] = useState(
+        '- - - - - - - - - - - - - - - - -'
+    );
+    const [token, setToken] = useState('');
+    const [user, setUser] = useState({});
+    const [name, setName] = useState('');
+    const processSize = useMemo(() => processes.length, [processes]);
+    const progressSize = useMemo(() => progresses.length, [progresses]);
 
     useEffect(() => {
         const getToken = localStorage.getItem('token');
+        const getUser = localStorage.getItem('user');
+
+        if (getToken) {
+            setToken(JSON.parse(getToken));
+        }
+
+        if (getUser) {
+            setUser(JSON.parse(getUser));
+
+            const name = JSON.parse(getUser).name;
+            const firstName = name.split(' ', 1)[0];
+
+            setName(firstName);
+        }
 
         async function loadProcess() {
             try {
@@ -58,12 +88,51 @@ export default function Dashboard() {
 
                 setProcesses(response.data);
             } catch (err) {
-                console.log('Token invalid');
+                alert('Algo deu errado! Faça login novamente.');
+
+                history.push('/');
             }
         }
 
         loadProcess();
     }, []);
+
+    async function showProgresses(idProcess, processNumber) {
+        try {
+            const response = await api.get(`/list/progress/${idProcess}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const data = response.data.map((progress) => ({
+                ...progress,
+                newDate: format(
+                    parseISO(progress.date),
+                    "'dia' dd 'de' MMMM'",
+                    {
+                        locale: pt,
+                    }
+                ),
+                newTitle: progress.generic_title
+                    .normalize('NFD')
+                    .replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+                    .toLowerCase(),
+            }));
+
+            setProgresses(data);
+            setNumberProcess(processNumber);
+        } catch (err) {
+            alert('Algo deu errado! Tente novamente.');
+        }
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        history.push('/');
+    }
 
     return (
         <Container>
@@ -77,14 +146,14 @@ export default function Dashboard() {
                         <Icon src={settings} alt="Settings - Probono" />
                     </IconContainer>
                 </IconsContainer>
-                <IconContainer>
+                <IconContainer onClick={() => handleLogout()}>
                     <Icon src={logout} alt="Settings - Probono" />
                 </IconContainer>
             </MenuContainer>
             <ContainerMiddle>
                 <BannerContainer>
                     <TextContainer>
-                        <TextTitle>Olá Jhon!</TextTitle>
+                        <TextTitle>Olá {name}!</TextTitle>
                         <TextDescription>
                             Seja bem-vindo novamente.
                         </TextDescription>
@@ -95,161 +164,92 @@ export default function Dashboard() {
                     />
                 </BannerContainer>
 
-                <Title>Processos</Title>
+                <MoreInfo>
+                    <Title>Processos</Title>
+                    <Options>
+                        <NameOptions
+                            onClick={() => history.push('/new/process')}
+                        >
+                            <FaPlus size={20} color="#fff" />
+                            Processo
+                        </NameOptions>
+                        <NameOptions
+                            onClick={() => history.push('/new/progress')}
+                        >
+                            <FaPlus size={20} color="#fff" />
+                            Progresso
+                        </NameOptions>
+                        <NameOptions onClick={() => history.push('/new/rule')}>
+                            <FaPlus size={20} color="#fff" />
+                            Regra
+                        </NameOptions>
+                    </Options>
+                </MoreInfo>
                 <ProcessesContainer>
-                    <ProcessContainer>
-                        <Process>
-                            <AvatarClient
-                                src={avatar}
-                                alt="Avatar Cliente - Probono"
-                            />
-                            <ProcessDescription>
-                                <ProcessClient>
-                                    Maurilio de Jesus Silveira
-                                </ProcessClient>
-                                <ProcessNumber>
-                                    nº: 12345678912345678900
-                                </ProcessNumber>
-                            </ProcessDescription>
-                        </Process>
-                        <ProcessButton>Progresso</ProcessButton>
-                    </ProcessContainer>
-
-                    <ProcessContainer>
-                        <Process>
-                            <AvatarClient
-                                src={avatar}
-                                alt="Avatar Cliente - Probono"
-                            />
-                            <ProcessDescription>
-                                <ProcessClient>
-                                    Maurilio de Jesus Silveira
-                                </ProcessClient>
-                                <ProcessNumber>
-                                    nº: 12345678912345678900
-                                </ProcessNumber>
-                            </ProcessDescription>
-                        </Process>
-                        <ProcessButton>Progresso</ProcessButton>
-                    </ProcessContainer>
-
-                    <ProcessContainer>
-                        <Process>
-                            <AvatarClient
-                                src={avatar}
-                                alt="Avatar Cliente - Probono"
-                            />
-                            <ProcessDescription>
-                                <ProcessClient>
-                                    Maurilio de Jesus Silveira
-                                </ProcessClient>
-                                <ProcessNumber>
-                                    nº: 12345678912345678900
-                                </ProcessNumber>
-                            </ProcessDescription>
-                        </Process>
-                        <ProcessButton>Progresso</ProcessButton>
-                    </ProcessContainer>
-
-                    <ProcessContainer>
-                        <Process>
-                            <AvatarClient
-                                src={avatar}
-                                alt="Avatar Cliente - Probono"
-                            />
-                            <ProcessDescription>
-                                <ProcessClient>
-                                    Maurilio de Jesus Silveira
-                                </ProcessClient>
-                                <ProcessNumber>
-                                    nº: 12345678912345678900
-                                </ProcessNumber>
-                            </ProcessDescription>
-                        </Process>
-                        <ProcessButton>Progresso</ProcessButton>
-                    </ProcessContainer>
-
-                    <ProcessContainer>
-                        <Process>
-                            <AvatarClient
-                                src={avatar}
-                                alt="Avatar Cliente - Probono"
-                            />
-                            <ProcessDescription>
-                                <ProcessClient>
-                                    Maurilio de Jesus Silveira
-                                </ProcessClient>
-                                <ProcessNumber>
-                                    nº: 12345678912345678900
-                                </ProcessNumber>
-                            </ProcessDescription>
-                        </Process>
-                        <ProcessButton>Progresso</ProcessButton>
-                    </ProcessContainer>
+                    {processes.map((process, index) => (
+                        <ProcessContainer key={String(process.id)}>
+                            <Process>
+                                <AvatarClient
+                                    src={avatar}
+                                    alt="Avatar Cliente - Probono"
+                                />
+                                <ProcessDescription>
+                                    <ProcessClient>
+                                        {process.client.name}
+                                    </ProcessClient>
+                                    <ProcessNumber>
+                                        nº: {process.number}
+                                    </ProcessNumber>
+                                </ProcessDescription>
+                            </Process>
+                            <ProcessButton
+                                onClick={() =>
+                                    showProgresses(process.id, process.number)
+                                }
+                            >
+                                Progresso
+                            </ProcessButton>
+                        </ProcessContainer>
+                    ))}
                 </ProcessesContainer>
             </ContainerMiddle>
             <ContainerLeft>
                 <ViewContiner>
                     <Content>
-                        <Total>11</Total>
-                        <Label>Total de clientes</Label>
+                        <Total>{processSize ? processSize : '0'}</Total>
+                        <Label>Total de processos</Label>
                     </Content>
                     <Content>
-                        <Total>4</Total>
-                        <Label>Total de processos</Label>
+                        <Total>{progressSize ? progressSize : '0'}</Total>
+                        <Label>Total de progressos</Label>
                     </Content>
                 </ViewContiner>
                 <Title>
-                    Progresso: <span>00000000000000000000</span>
+                    Progresso: <span>{numberProcess}</span>
                 </Title>
                 <ProgressesContainer>
-                    <Progress>
-                        <ProgressClient>
-                            Cliente:
-                            <span> Maurilio de Jesus Silveira</span>
-                        </ProgressClient>
-                        <ProgressDescription>
-                            A audiência de conciliação, forma amigável de
-                            resolver um processo, foi marcada.
-                        </ProgressDescription>
-                        <ProgressDate>01/02/2019 08:30</ProgressDate>
-                    </Progress>
-
-                    <Progress>
-                        <ProgressClient>
-                            Cliente:
-                            <span> Maurilio de Jesus Silveira</span>
-                        </ProgressClient>
-                        <ProgressDescription>
-                            A audiência de conciliação, forma amigável de
-                            resolver um processo, foi marcada.
-                        </ProgressDescription>
-                        <ProgressDate>01/02/2019 08:30</ProgressDate>
-                    </Progress>
-
-                    <Progress>
-                        <ProgressClient>
-                            Cliente:
-                            <span> Maurilio de Jesus Silveira</span>
-                        </ProgressClient>
-                        <ProgressDescription>
-                            A audiência de conciliação, forma amigável de
-                            resolver um processo, foi marcada.
-                        </ProgressDescription>
-                        <ProgressDate>01/02/2019 08:30</ProgressDate>
-                    </Progress>
-
-                    <Progress>
-                        <ProgressClient>
-                            Cliente:
-                            <span> Maurilio de Jesus Silveira</span>
-                        </ProgressClient>
-                        <ProgressDescription>
-                            A audiência de conciliação, forma amigável de
-                            resolver um processo, foi marcada.
-                        </ProgressDescription>
-                        <ProgressDate>01/02/2019 08:30</ProgressDate>
-                    </Progress>
+                    {progresses.map((progress) => (
+                        <Progress key={String(progress.id)}>
+                            <ProgressClient>
+                                Cliente:
+                                <span> Maurilio de Jesus Silveira</span>
+                            </ProgressClient>
+                            <ProgressDescription>
+                                {user.provider
+                                    ? progress.generic_title
+                                    : progress.newTitle}
+                                {progress.details
+                                    ? ' - ' + progress.details
+                                    : ''}
+                            </ProgressDescription>
+                            <ProgressDate>
+                                {progress.newDate && progress.hours
+                                    ? progress.newDate + ' às '
+                                    : progress.newDate}{' '}
+                                {progress.hours}
+                            </ProgressDate>
+                        </Progress>
+                    ))}
                 </ProgressesContainer>
             </ContainerLeft>
         </Container>

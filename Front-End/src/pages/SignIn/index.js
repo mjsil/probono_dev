@@ -9,7 +9,7 @@ import history from '../../services/history';
 import Container from '../../components/Container';
 import Header from '../../components/Header';
 
-import { SubmitButton } from './styles';
+import { SubmitButton, Button } from './styles';
 
 const schema = Yup.object().shape({
     email: Yup.string()
@@ -22,19 +22,24 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false);
 
     async function handleSubmit({ email, password }) {
-        const response = await api.post('/session', {
-            email,
-            password,
-        });
+        try {
+            setLoading(true);
 
-        const { user, token } = response.data;
+            const response = await api.post('/session', {
+                email,
+                password,
+            });
 
-        api.defaults.headers.common['Authorization'] = token;
+            const { user, token } = response.data;
 
-        await localStorage.setItem('user', JSON.stringify(user));
-        await localStorage.setItem('token', JSON.stringify(token));
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('token', JSON.stringify(token));
 
-        history.push('/dashboard');
+            setLoading(false);
+            history.push('/dashboard');
+        } catch (err) {
+            alert('E-mail ou senha incorretos.');
+        }
     }
 
     return (
@@ -52,16 +57,16 @@ export default function SignIn() {
                     placeholder="* * * * * * *"
                 />
 
-                <SubmitButton loading={loading} value="entrar">
+                <SubmitButton loading={loading}>
                     {loading ? (
                         <FaSpinner color="#fff" size={14} />
                     ) : (
                         <strong>Entrar</strong>
                     )}
                 </SubmitButton>
-                <SubmitButton value="cadastrar">
+                <Button onClick={() => history.push('/signup')}>
                     <strong>Cadastre-se</strong>
-                </SubmitButton>
+                </Button>
             </Form>
         </Container>
     );

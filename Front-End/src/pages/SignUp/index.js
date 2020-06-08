@@ -3,10 +3,13 @@ import { FaSpinner, FaArrowLeft } from 'react-icons/fa';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
+import api from '../../services/api';
+import history from '../../services/history';
+
 import Container from '../../components/Container';
 import Header from '../../components/Header';
 
-import { SubmitButton, IconBack } from './styles';
+import { SubmitButton, Button, Radio } from './styles';
 
 const schema = Yup.object().shape({
     name: Yup.string().required('O nome é obrigatório.'),
@@ -21,9 +24,30 @@ const schema = Yup.object().shape({
 
 export default function SignUp() {
     const [loading, setLoading] = useState(false);
+    const [lawyer, setLawyer] = useState(false);
 
-    function handleSubmit() {
-        return;
+    async function handleSubmit({ name, cpf, email, password }) {
+        try {
+            setLoading(true);
+
+            await api.post('/create/user', {
+                name,
+                cpf,
+                email,
+                password,
+                provider: lawyer,
+            });
+
+            alert(
+                'Usuário criado com sucesso! Faça o login para desfrutar da aplicação...'
+            );
+
+            setLoading(false);
+            history.push('/');
+        } catch (err) {
+            alert('Verifique os dados ou tente fazer login!');
+            console.log(err);
+        }
     }
 
     return (
@@ -46,6 +70,10 @@ export default function SignUp() {
                     placeholder="* * * * * * *"
                 />
                 <Input name="cpf" type="text" placeholder="000.000.000-00" />
+                <Radio onClick={() => setLawyer(true)}>
+                    <Input name="lawyer" type="radio" />
+                    <strong>lawyer</strong>
+                </Radio>
 
                 <SubmitButton loading={loading}>
                     {loading ? (
@@ -54,10 +82,10 @@ export default function SignUp() {
                         <strong>Cadastrar</strong>
                     )}
                 </SubmitButton>
-                <IconBack>
+                <Button onClick={() => history.push('/')}>
                     <FaArrowLeft size={20} color="#000000" />
                     <strong>Já tenho uma conta</strong>
-                </IconBack>
+                </Button>
             </Form>
         </Container>
     );

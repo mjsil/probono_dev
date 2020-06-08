@@ -23,14 +23,14 @@ export const SubmitButton = styled.button.attrs((props) => ({
     type: 'submit',
     disabled: props.loading,
 }))`
-    background: ${(props) => (props.value === 'entrar' ? '#000000' : '#fff')};
+    background: #000000;
     border: 0;
     padding: 10px;
     border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${(props) => (props.value === 'entrar' ? '#fff' : '#000000')};
+    color: #fff;
     font-family: 'Roboto Slab', serif;
     font-size: 14px;
     font-size: 400;
@@ -48,8 +48,21 @@ export const SubmitButton = styled.button.attrs((props) => ({
                 animation: ${rotate} 1.5s linear infinite;
             }
         `}
+`;
 
-    & + button {
-        margin-top: 5px;
-    }
+export const Button = styled.button.attrs(() => ({
+    type: 'button',
+}))`
+    background: #fff;
+    border: 0;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    font-family: 'Roboto Slab', serif;
+    font-size: 14px;
+    font-size: 400;
+    margin-top: 5px;
 `;

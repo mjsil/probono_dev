@@ -291,3 +291,35 @@ export const ProgressDate = styled.p`
     text-align: end;
     line-height: 20px;
 `;
+
+export const MoreInfo = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+`;
+
+export const Options = styled.div`
+    margin-bottom: 16px;
+`;
+
+export const NameOptions = styled.button`
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Roboto Slab', serif;
+    border-radius: 14px;
+    padding: 5px 10px;
+
+    & + button {
+        margin-right: 5px;
+    }
+
+    svg {
+        padding: 5px;
+        background: #000000;
+        margin-right: 10px;
+        border-radius: 50%;
+        margin-bottom: -4px;
+    }
+`;
