@@ -5,9 +5,12 @@ import ProcessController from './app/controllers/ProcessController';
 import ProgressController from './app/controllers/ProgressCrontroller';
 import RuleController from './app/controllers/RuleController';
 
+import cors from './app/middlewares/cors';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+
+routes.use(cors);
 
 routes.post('/create/user', UserController.store);
 
