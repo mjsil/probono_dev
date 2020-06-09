@@ -14,7 +14,7 @@ export default function Banner() {
     return (
         <Container>
             <BannerText>
-                <BannerTitle>Olá Josh!</BannerTitle>
+                <BannerTitle>Olá Josh</BannerTitle>
                 <BannerDescription>Seja bem-vindo novamente.</BannerDescription>
             </BannerText>
             <Illustration

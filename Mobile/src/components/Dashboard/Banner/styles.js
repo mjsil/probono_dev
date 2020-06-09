@@ -17,7 +17,7 @@ export const BannerText = styled.View`
 `;
 
 export const BannerTitle = styled.Text`
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     margin-bottom: 5px;
 `;
