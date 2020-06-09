@@ -15,7 +15,7 @@
 ###### -> Criando: o usuário (advogado) pode criar um progresso informando apenas o número do Processo, o Generic_Title que irá servir para fazer a tradução para uma linguagem que o cliente possa ter entendimento mais fácil, Details que pode ser considerado como algum detalhe do progresso (nome do cliente, nome da empresa), Data e Hora.
 ###### -> Listando: qualquer usuário tem acesso a listagem do Progresso do Processo, desde que o mesmo pertença a ele.
 
-#### Regras/Trasução:
+#### Regras/Tradução:
 ###### -> Criando: o usuário (advogado) pode criar uma Regra informando apenas a Generic_Title e a sua Tradução a regra criada irá pertencer apenas ao advogado que crio-lá.
 ###### -> Listando: o usuário (advogado) pode listar todas as regras que pertencem a ele.
 ###### -> Tradução: quando o usuário logado na aplicação for um cliente ao listar os Progressos de um Processo o sistema irá girar todos os caracteres especiais do Generic_Title e deixalo em letras minusculas, esse novo Generic_Title será enviado para a API que irá retornar a Tradução se existir daquela regra. 
@@ -56,4 +56,13 @@
 ![processos](https://user-images.githubusercontent.com/42494117/84099709-a25d1880-a9e0-11ea-87a9-42ce5755db49.png)
 ![progressos](https://user-images.githubusercontent.com/42494117/84099712-a4bf7280-a9e0-11ea-86e6-2612c672718d.png)
 ![regras](https://user-images.githubusercontent.com/42494117/84099916-1d263380-a9e1-11ea-9334-73440955888c.png)
+
+## Segue imagens da aplicação Banco de Dados
+
+![users](https://user-images.githubusercontent.com/42494117/84100077-7d1cda00-a9e1-11ea-89ad-4daee01a0041.png)
+![processes](https://user-images.githubusercontent.com/42494117/84100068-78582600-a9e1-11ea-9080-263b5991c5c2.png)
+![progresses](https://user-images.githubusercontent.com/42494117/84100097-88700580-a9e1-11ea-9580-33170309ea72.png)
+![rules](https://user-images.githubusercontent.com/42494117/84100073-7b531680-a9e1-11ea-9ce9-db97d9bb25fd.png)
+
+
 
