@@ -51,7 +51,9 @@
 
 ![login](https://user-images.githubusercontent.com/42494117/84099695-95402980-a9e0-11ea-8067-62138b57b7a4.png)
 ![register](https://user-images.githubusercontent.com/42494117/84099706-9cffce00-a9e0-11ea-93cb-2b4f7c6a52e1.png)
-![processos](https://user-images.githubusercontent.com/42494117/84099709-a25d1880-a9e0-11ea-87a9-42ce5755db49.png)
-![progressos](https://user-images.githubusercontent.com/42494117/84099712-a4bf7280-a9e0-11ea-86e6-2612c672718d.png)
 ![dashboard](https://user-images.githubusercontent.com/42494117/84099734-af7a0780-a9e0-11ea-872d-703edb9cdc75.png)
 ![dashboard2](https://user-images.githubusercontent.com/42494117/84099746-b43ebb80-a9e0-11ea-9045-d16d29925088.png)
+![processos](https://user-images.githubusercontent.com/42494117/84099709-a25d1880-a9e0-11ea-87a9-42ce5755db49.png)
+![progressos](https://user-images.githubusercontent.com/42494117/84099712-a4bf7280-a9e0-11ea-86e6-2612c672718d.png)
+![regras](https://user-images.githubusercontent.com/42494117/84099916-1d263380-a9e1-11ea-9334-73440955888c.png)
+
